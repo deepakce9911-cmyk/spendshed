@@ -15,7 +15,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=2">
+<link rel="stylesheet" href="css/site.css?v=3">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spendshed","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://deepakce9911-cmyk.github.io/spendshed/","description":"Finds every software subscription a company pays for, the seats nobody uses and the renewals coming up, then cancels and renegotiates on the company's behalf.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR","description":"Free waste report"}}
 </script>
@@ -30,7 +30,7 @@
     </nav>
     <div class="nav-cta">
       <a class="btn ghost" href="#audit">Sample report</a>
-      <a class="btn dark mag" href="#audit">Free audit</a>
+      <a class="btn dark" href="#audit">Free audit</a>
     </div>
   </div>
 </header>
@@ -48,8 +48,8 @@
         <span class="line"><span class="w">uses.</span></span>
       </h1>
       <div class="hero-ctas">
-        <a class="btn dark lg mag" href="#audit">Get your waste report<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn lg mag" href="#how">How it works</a>
+        <a class="btn dark lg" href="#audit">Get your waste report<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn lg" href="#how">How it works</a>
       </div>
     </div>
 
@@ -93,6 +93,7 @@
     <div class="panel" id="panel">
       <div class="win report" id="report">
         <div class="win-bar"><i></i><i></i><i></i><span>Waste report · Acme Labs · 42 people</span><b class="scan" id="scan"><em></em>Scanning statements</b></div>
+        <div class="scanbar"><i></i></div>
         <div class="report-grid">
           <div class="report-main">
             <div class="row h"><span>Tool</span><span>Paying for</span><span>Logged in, 60d</span><span>Renews</span><span>Action</span></div>
@@ -125,7 +126,7 @@
       <p class="kicker">Why it works</p>
       <h2>Three sources. One list. Someone who acts on it.</h2>
     </div>
-    <div class="feat-grid">
+    <div class="feat-grid" data-stagger>
       <article class="feat" data-reveal>
         <div class="feat-art merge">
           <div class="src s1">Card</div><div class="src s2">Inbox</div><div class="src s3">Logins</div>
@@ -164,7 +165,7 @@
       <p class="kicker" data-reveal>How it works</p>
       <h2 data-reveal>From statements to savings in a week.</h2>
       <p class="lead" data-reveal>No integrations to set up on day one. Start with the files you already have.</p>
-      <a class="btn dark lg mag" href="#audit" data-reveal>Start the free audit<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn dark lg" href="#audit" data-reveal>Start the free audit<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
     <ol class="steps" id="steps">
       <li class="step" data-step>
@@ -202,7 +203,7 @@
         <div><span>Likely software spend</span><b>₹<span id="estSpend">4.0L</span><em>a year</em></b></div>
         <div class="hot"><span>Likely waste</span><b>₹<span id="estWaste">1.0L</span><em>a year</em></b></div>
       </div>
-      <a class="btn dark full mag" href="#audit">Find the real number<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn dark full" href="#audit">Find the real number<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 </section>
@@ -214,13 +215,13 @@
       <p class="kicker">Pricing</p>
       <h2>If we find nothing, you pay nothing.</h2>
     </div>
-    <div class="price-grid">
+    <div class="price-grid" data-stagger>
       <article class="price" data-reveal>
         <h3>Free audit</h3>
         <div class="price-n">₹0</div>
         <p>The full waste report, once. Every subscription, idle seat and renewal, with our recommended action for each.</p>
         <ul><li>Card statements, PDF or CSV</li><li>Optional Gmail and Workspace read</li><li>Report within a day</li></ul>
-        <a class="btn lg mag" href="#audit">Get the report</a>
+        <a class="btn lg" href="#audit">Get the report</a>
       </article>
       <article class="price featured" data-reveal>
         <span class="badge">Most teams</span>
@@ -228,14 +229,14 @@
         <div class="price-n">25%<small>of first-year savings</small></div>
         <p>We do the cancelling, downgrading and negotiating. You pay a quarter of what we cut in year one, after the money is actually saved.</p>
         <ul><li>Every action approved by you</li><li>Monthly renewal watch</li><li>New sign-up alerts</li><li>Nothing saved, nothing owed</li></ul>
-        <a class="btn dark lg mag" href="#audit">Start with the free audit<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn dark lg" href="#audit">Start with the free audit<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </article>
       <article class="price" data-reveal>
         <h3>Flat plan</h3>
         <div class="price-n">Fixed<small>monthly fee</small></div>
         <p>For teams above 150 people or with finance teams who prefer a predictable line item. Priced on your stack.</p>
         <ul><li>Everything in Pay from savings</li><li>Quarterly stack review</li><li>Shared channel with your finance lead</li></ul>
-        <a class="btn lg mag" href="mailto:deepakce9911@gmail.com?subject=Spendshed%20flat%20plan">Talk to us</a>
+        <a class="btn lg" href="mailto:deepakce9911@gmail.com?subject=Spendshed%20flat%20plan">Talk to us</a>
       </article>
     </div>
   </div>
@@ -284,7 +285,7 @@
         <input type="text" name="company" placeholder="Company" required autocomplete="organization">
         <select name="size" required><option value="" disabled selected>Team size</option><option>10–25</option><option>26–50</option><option>51–100</option><option>101–300</option><option>300+</option></select>
       </div>
-      <button class="btn dark lg full mag" type="submit">Send me the report<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <button class="btn dark lg full" type="submit">Send me the report<svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       <p class="fine">By sending, you agree that we read these files once to prepare your report. No statements? <a href="mailto:deepakce9911@gmail.com?subject=Spendshed%20audit">Email us</a> and we'll walk you through the export.</p>
       <p class="sent" id="sent" hidden>Got them. Your report lands within a day.</p>
     </form>
@@ -302,8 +303,6 @@
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="js/site.js?v=2"></script>
+<script src="js/site.js?v=3"></script>
 </body>
 </html>
