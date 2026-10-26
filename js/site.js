@@ -1,12 +1,12 @@
-// Spendshed motion, measured on dextr.ai and testmuai.com: fade-ups with expo-out easing,
-// linear progress and dash loops, no bounces. Plain CSS transitions driven by IntersectionObserver.
+// Spendshed motion: CSS transitions driven by IntersectionObserver and one scroll-driven story.
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const STATIC = /[?&]static=1/.test(location.search) || RM;
   if (STATIC) document.documentElement.classList.add('static');
-  const wait = (ms, fn) => STATIC ? fn() : setTimeout(fn, ms);
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
 
   /* ---------- helpers ---------- */
   const fmtIN = n => { n = Math.round(n); const s = String(n); if (s.length <= 3) return s; const last = s.slice(-3); let rest = s.slice(0, -3); rest = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ','); return rest + ',' + last; };
@@ -15,7 +15,7 @@
     const to = +el.dataset.count, fmt = el.dataset.format === 'in' ? fmtIN : v => Math.round(v);
     if (STATIC) { el.textContent = fmt(to); return; }
     const t0 = performance.now();
-    const step = now => { const p = Math.min(1, (now - t0) / dur); const k = 1 - Math.pow(1 - p, 3); el.textContent = fmt(to * k); if (p < 1) requestAnimationFrame(step); };
+    const step = now => { const p = clamp((now - t0) / dur); el.textContent = fmt(to * easeOut(p)); if (p < 1) requestAnimationFrame(step); };
     requestAnimationFrame(step);
   };
 
@@ -24,8 +24,8 @@
   const onScroll = () => nav.classList.toggle('scrolled', scrollY > 10);
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* ---------- hero counters (entrance itself is CSS) ---------- */
-  wait(900, () => $$('.card3d [data-count]').forEach(el => countUp(el, 1400)));
+  /* ---------- hero counters ---------- */
+  if (STATIC) $$('.card3d [data-count]').forEach(el => countUp(el)); else setTimeout(() => $$('.card3d [data-count]').forEach(el => countUp(el, 1400)), 900);
 
   /* ---------- estimate slider ---------- */
   const team = $('#team');
@@ -44,44 +44,66 @@
     if (/[?&]sent=1/.test(location.search)) { $('#sent').hidden = false; $('#auditForm button[type=submit]').textContent = 'Sent'; }
   }
 
-  /* ---------- seats art ---------- */
-  const sg = $('.seat-grid');
-  if (sg) for (let i = 0; i < 18; i++) { const d = document.createElement('i'); d.className = 'seat'; sg.appendChild(d); }
+  /* ---------- seats avatars ---------- */
+  const avs = $('#avs');
+  if (avs) {
+    const names = ['AR', 'PK', 'SM', 'DJ', 'NT', 'RV', 'KI', 'MB', 'AS', 'TG', 'VR', 'LP', 'HN', 'JD', 'SK', 'RM', 'AP', 'GS'];
+    const cols = ['#0A0A0A', '#3B4FD8', '#1B7F4B', '#B7791F', '#7A3E9D', '#0B5CFF', '#D7263D', '#0C7C8A', '#5E6AD2'];
+    names.forEach((n, i) => { const d = document.createElement('i'); d.className = 'av' + (i >= 9 ? ' idle' : ''); d.style.setProperty('--i', i); if (i < 9) d.style.background = cols[i % cols.length]; d.textContent = n; avs.appendChild(d); });
+  }
 
   /* ---------- reveal on view ---------- */
-  // siblings inside a stagger group get 90ms steps
   $$('[data-stagger]').forEach(g => $$('[data-reveal]', g).forEach((el, i) => el.style.transitionDelay = (i * 90) + 'ms'));
   const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); io.unobserve(e.target); }), { threshold: .12, rootMargin: '0px 0px -8% 0px' });
   $$('[data-reveal]').forEach(el => io.observe(el));
 
-  /* ---------- product panel ---------- */
-  const panel = $('#panel');
-  if (panel) {
-    const run = () => {
-      $('#report').classList.add('in');
-      $$('.row[data-row]').forEach((r, i) => wait(400 + i * 110, () => r.classList.add('in')));
-      wait(900, () => $$('.report-side [data-count]').forEach(el => countUp(el, 1600)));
-      wait(1700, () => { const sc = $('#scan'); sc.classList.add('done'); sc.lastChild.textContent = 'Scan complete · 14 found'; });
-      $$('.float-note').forEach((n, i) => wait(1800 + i * 250, () => n.classList.add('in')));
+  /* ---------- the story: statement → found → cut ---------- */
+  const story = $('#product');
+  if (story) {
+    const view = $('.stmt-view'), lines = $('#stmtLines'), rows = $$('.sl', lines), saas = rows.filter(r => r.dataset.tool);
+    const scan = $('.scanline'), tiles = $$('.fg-tile'), flRows = $$('.fl-row'), beats = $$('.beat'), dots = $$('.story-dots i');
+    const foundN = $('#foundN'), totalN = $('#totalN'), backN = $('#backN');
+    const TOTAL = 412000, BACK = 131000;
+    let range = 0, scanY = 0, lastBeat = -1;
+    const measure = () => { scanY = scan.offsetTop; range = Math.max(0, lines.scrollHeight - scanY + 16); };
+    const render = p => {
+      const b = p < .36 ? 0 : p < .7 ? 1 : 2;
+      if (b !== lastBeat) { beats.forEach((el, i) => el.classList.toggle('on', i === b)); dots.forEach((d, i) => d.classList.toggle('on', i <= b)); lastBeat = b; }
+      // beat 1: the statement scrolls under the reading line
+      const p1 = clamp(p / .4);
+      const ty = -p1 * range;
+      lines.style.transform = `translate3d(0,${ty}px,0)`;
+      let n = 0;
+      saas.forEach((r, i) => { const hit = r.offsetTop + r.offsetHeight * .5 + ty <= scanY; r.classList.toggle('hit', hit); if (hit) n++; if (tiles[i]) tiles[i].classList.toggle('in', hit); });
+      foundN.textContent = n;
+      // beat 2: the rows with seats and usage
+      const p2 = clamp((p - .36) / .3);
+      flRows.forEach((r, i) => r.classList.toggle('in', p2 > i / flRows.length));
+      // beat 3: cut idle seats, money comes back
+      const p3 = easeOut(clamp((p - .7) / .24));
+      story.classList.toggle('cut', p3 > .02);
+      totalN.textContent = fmtIN(TOTAL - BACK * p3);
+      backN.textContent = fmtIN(BACK * p3);
     };
-    const pio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; pio.disconnect(); run(); }), { threshold: .25 });
-    pio.observe(panel);
-  }
-
-  /* ---------- features: seats switch off, chat plays ---------- */
-  const feats = $('#features');
-  if (feats) {
-    const run = () => {
-      const seats = $$('.seat');
-      for (let k = 1; k <= 9; k++) wait(500 + k * 140, () => seats[18 - k].classList.add('off'));
-      const b = $$('.chat .bubble');
-      wait(300, () => b[0].classList.add('in'));
-      wait(1100, () => b[1].classList.add('in'));
-      wait(1900, () => b[2].classList.add('in'));
-      wait(3400, () => { b[2].classList.remove('in'); b[2].classList.add('gone'); b[3].classList.add('in'); });
+    const pinned = () => matchMedia('(min-width:1101px)').matches;
+    let playing = false, observed = false;
+    const onS = () => { if (!pinned()) return; const r = story.getBoundingClientRect(); render(clamp(-r.top / (r.height - innerHeight))); };
+    const play = () => { // phones and tablets: play once when the device is in view
+      if (playing) return; playing = true; const t0 = performance.now(), dur = 7000;
+      const step = now => { const p = clamp((now - t0) / dur); render(p); if (p < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
     };
-    const fio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; fio.disconnect(); run(); }), { threshold: .3 });
-    fio.observe(feats);
+    const sync = () => {
+      measure();
+      if (STATIC) { render(1); return; }
+      if (pinned()) onS();
+      else if (!observed) { observed = true; const sio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { sio.disconnect(); play(); } }), { threshold: .35 }); sio.observe($('#device')); }
+    };
+    sync();
+    if (!STATIC) addEventListener('scroll', onS, { passive: true });
+    addEventListener('resize', sync);
+    addEventListener('load', sync);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
   }
 
   /* ---------- how it works: progress line follows scroll ---------- */
@@ -91,13 +113,14 @@
     const upd = () => {
       ticking = false;
       const r = stepsEl.getBoundingClientRect(); const mid = innerHeight * .6;
-      const p = Math.max(0, Math.min(1, (mid - r.top) / r.height));
+      const p = clamp((mid - r.top) / r.height);
       stepsEl.style.setProperty('--prog', (p * 100) + '%');
       const k = Math.min(steps.length - 1, Math.floor(p * steps.length + .15));
       steps.forEach((s, i) => s.classList.toggle('on', i <= k));
     };
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
     upd();
+    if (STATIC) steps.forEach(s => s.classList.add('on'));
   }
 
   /* ---------- anchors: offset for the fixed nav ---------- */
