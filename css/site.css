@@ -286,3 +286,5 @@ html.static .card3d::after,html.static .scanbar i{animation:none;transition:none
   .marquee .track{font-size:18px;gap:40px}
   .step{padding-bottom:36px}
 }
+
+@media (max-width:760px){.win-bar .scan{display:none}}
