@@ -15,7 +15,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=6">
+<link rel="stylesheet" href="css/site.css?v=9">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spendshed","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://deepakce9911-cmyk.github.io/spendshed/","description":"Finds every software subscription a company pays for, the seats nobody uses and the renewals coming up, then cancels and renegotiates on the company's behalf.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR","description":"Free waste report"}}
 </script>
@@ -103,56 +103,63 @@
 
 <!-- STORY -->
 <section class="story" id="product">
-  <div class="story-pin">
-    <div class="wrap story-grid">
-      <div class="story-copy">
-        <p class="kicker">What happens to your statement</p>
-        <div class="beats">
-          <div class="beat on"><h2>We read the statements you already have.</h2><p>Three months of card lines, every charge checked against our vendor list. No integrations to set up on day one.</p></div>
-          <div class="beat"><h2>Every subscription, found and matched.</h2><p>Each charge becomes a tool, with the seats you pay for next to the seats people actually opened.</p></div>
-          <div class="beat"><h2>Idle seats cut. Money back.</h2><p>Downgrade, cancel, renegotiate. You approve every action, we do the chasing and send you the new invoice.</p></div>
-        </div>
-        <div class="story-dots"><i class="on"></i><i></i><i></i></div>
-        <p class="story-hint">Scroll to follow the money</p>
+  <div class="wrap story-grid">
+    <div class="story-copy">
+      <p class="kicker">What happens to your statement</p>
+      <div class="beats">
+        <div class="beat on"><h2>We read the statements you already have.</h2><p>Three months of card lines, every charge checked against our vendor list. No integrations to set up on day one.</p></div>
+        <div class="beat"><h2>Every subscription, found and matched.</h2><p>Each charge becomes a tool, with the seats you pay for next to the seats people actually opened.</p></div>
+        <div class="beat"><h2>Idle seats cut. Money back.</h2><p>Downgrade, cancel, renegotiate. You approve every action, we do the chasing and send you the new invoice.</p></div>
       </div>
+      <div class="story-dots" aria-label="Steps"><i class="on" role="button" tabindex="0" aria-label="Read"></i><i role="button" tabindex="0" aria-label="Match"></i><i role="button" tabindex="0" aria-label="Cut"></i></div>
+    </div>
 
-      <div class="device" id="device">
-        <div class="pane stmt">
-          <div class="pane-h"><i class="dot-g"></i>Business card · Sep to Nov</div>
-          <div class="stmt-view">
-            <div class="scanline"></div>
-            <div class="stmt-lines" id="stmtLines">
-              <div class="sl" data-tool="slack"><span class="d">02 Sep</span><span class="m"><svg class="bi" style="color:#4A154B"><use href="assets/brands.svg#slack"/></svg>SLACK TECHNOLOGIES · DUBLIN</span><span class="a">₹29,400</span></div>
-              <div class="sl"><span class="d">03 Sep</span><span class="m">UBER INDIA SYSTEMS</span><span class="a">₹640</span></div>
-              <div class="sl" data-tool="figma"><span class="d">04 Sep</span><span class="m"><svg class="bi" style="color:#F24E1E"><use href="assets/brands.svg#figma"/></svg>FIGMA INC · SAN FRANCISCO</span><span class="a">₹25,200</span></div>
-              <div class="sl"><span class="d">05 Sep</span><span class="m">SWIGGY · BANGALORE</span><span class="a">₹1,180</span></div>
-              <div class="sl" data-tool="zoom"><span class="d">06 Sep</span><span class="m"><svg class="bi" style="color:#0B5CFF"><use href="assets/brands.svg#zoom"/></svg>ZOOM.US · 888-799-9666</span><span class="a">₹31,250</span></div>
-              <div class="sl"><span class="d">08 Sep</span><span class="m">AMAZON PAY INDIA</span><span class="a">₹4,320</span></div>
-              <div class="sl" data-tool="notion"><span class="d">09 Sep</span><span class="m"><svg class="bi" style="color:#000"><use href="assets/brands.svg#notion"/></svg>NOTION LABS INC</span><span class="a">₹26,400</span></div>
-              <div class="sl"><span class="d">10 Sep</span><span class="m">INDIGO · 6E BOOKING</span><span class="a">₹7,860</span></div>
-              <div class="sl" data-tool="google"><span class="d">12 Sep</span><span class="m"><svg class="bi" style="color:#4285F4"><use href="assets/brands.svg#google"/></svg>GOOGLE WORKSPACE</span><span class="a">₹32,760</span></div>
-              <div class="sl" data-tool="notion"><span class="d">13 Sep</span><span class="m"><svg class="bi" style="color:#000"><use href="assets/brands.svg#notion"/></svg>NOTION LABS INC</span><span class="a">₹3,300</span></div>
-              <div class="sl"><span class="d">15 Sep</span><span class="m">BLUE TOKAI COFFEE</span><span class="a">₹540</span></div>
-              <div class="sl" data-tool="loom"><span class="d">16 Sep</span><span class="m"><svg class="bi" style="color:#625DF5"><use href="assets/brands.svg#loom"/></svg>LOOM INC</span><span class="a">₹10,500</span></div>
-              <div class="sl" data-tool="amazonwebservices"><span class="d">18 Sep</span><span class="m"><svg class="bi" style="color:#232F3E"><use href="assets/brands.svg#amazonwebservices"/></svg>AWS EMEA SARL</span><span class="a">₹41,900</span></div>
-              <div class="sl"><span class="d">19 Sep</span><span class="m">TATA POWER DDL</span><span class="a">₹9,120</span></div>
-              <div class="sl" data-tool="hubspot"><span class="d">21 Sep</span><span class="m"><svg class="bi" style="color:#FF7A59"><use href="assets/brands.svg#hubspot"/></svg>HUBSPOT INC</span><span class="a">₹34,000</span></div>
-              <div class="sl" data-tool="canva"><span class="d">22 Sep</span><span class="m"><svg class="bi" style="color:#00C4CC"><use href="assets/brands.svg#canva"/></svg>CANVA PTY LTD</span><span class="a">₹3,990</span></div>
-              <div class="sl"><span class="d">24 Sep</span><span class="m">MAKEMYTRIP</span><span class="a">₹12,400</span></div>
-              <div class="sl" data-tool="atlassian"><span class="d">25 Sep</span><span class="m"><svg class="bi" style="color:#0052CC"><use href="assets/brands.svg#atlassian"/></svg>ATLASSIAN PTY LTD</span><span class="a">₹18,200</span></div>
-              <div class="sl" data-tool="github"><span class="d">27 Sep</span><span class="m"><svg class="bi" style="color:#181717"><use href="assets/brands.svg#github"/></svg>GITHUB INC</span><span class="a">₹7,560</span></div>
-              <div class="sl" data-tool="openai"><span class="d">28 Sep</span><span class="m"><svg class="bi" style="color:#412991"><use href="assets/brands.svg#openai"/></svg>OPENAI LLC</span><span class="a">₹8,400</span></div>
-              <div class="sl"><span class="d">30 Sep</span><span class="m">OYO ROOMS</span><span class="a">₹3,200</span></div>
-              <div class="sl" data-tool="adobe"><span class="d">01 Oct</span><span class="m"><svg class="bi" style="color:#FF0000"><use href="assets/brands.svg#adobe"/></svg>ADOBE SYSTEMS</span><span class="a">₹4,700</span></div>
-              <div class="sl"><span class="d">02 Oct</span><span class="m">ZEPTO · MUMBAI</span><span class="a">₹760</span></div>
-              <div class="sl"><span class="d">03 Oct</span><span class="m">PVR CINEMAS</span><span class="a">₹1,100</span></div>
-            </div>
+    <div class="device" id="device" aria-hidden="true">
+      <div class="pane stmt">
+        <div class="pane-h"><span class="ph-t">Business card · Sep to Nov</span><b class="st" id="stmtState"><i></i>Reading</b></div>
+        <div class="stmt-view">
+          <div class="readline"></div>
+          <div class="stmt-lines" id="stmtLines">
+              <div class="sl" data-tool="slack"><span class="d">02 Sep</span><span class="m"><i class="lg-ic" style="color:#4A154B"><svg class="bi"><use href="assets/brands.svg#slack"/></svg></i><span class="t">Slack Technologies<small>Dublin · card 4421</small></span></span><span class="a">₹29,400</span></div>
+              <div class="sl"><span class="d">03 Sep</span><span class="m"><i class="lg-ic plain"></i><span class="t">Uber India<small>Bengaluru</small></span></span><span class="a">₹640</span></div>
+              <div class="sl" data-tool="figma"><span class="d">04 Sep</span><span class="m"><i class="lg-ic" style="color:#F24E1E"><svg class="bi"><use href="assets/brands.svg#figma"/></svg></i><span class="t">Figma Inc<small>San Francisco · card 4421</small></span></span><span class="a">₹25,200</span></div>
+              <div class="sl"><span class="d">05 Sep</span><span class="m"><i class="lg-ic plain"></i><span class="t">Swiggy<small>Bengaluru</small></span></span><span class="a">₹1,180</span></div>
+              <div class="sl" data-tool="zoom"><span class="d">06 Sep</span><span class="m"><i class="lg-ic" style="color:#0B5CFF"><svg class="bi"><use href="assets/brands.svg#zoom"/></svg></i><span class="t">Zoom Video<small>zoom.us · card 4421</small></span></span><span class="a">₹31,250</span></div>
+              <div class="sl"><span class="d">08 Sep</span><span class="m"><i class="lg-ic plain"></i><span class="t">Amazon Pay India<small>Mumbai</small></span></span><span class="a">₹4,320</span></div>
+              <div class="sl" data-tool="notion"><span class="d">09 Sep</span><span class="m"><i class="lg-ic" style="color:#000"><svg class="bi"><use href="assets/brands.svg#notion"/></svg></i><span class="t">Notion Labs<small>San Francisco · card 4421</small></span></span><span class="a">₹26,400</span></div>
+              <div class="sl"><span class="d">10 Sep</span><span class="m"><i class="lg-ic plain"></i><span class="t">IndiGo<small>6E booking</small></span></span><span class="a">₹7,860</span></div>
+              <div class="sl" data-tool="google"><span class="d">12 Sep</span><span class="m"><i class="lg-ic" style="color:#4285F4"><svg class="bi"><use href="assets/brands.svg#google"/></svg></i><span class="t">Google Workspace<small>Singapore · card 4421</small></span></span><span class="a">₹32,760</span></div>
+              <div class="sl" data-tool="notion"><span class="d">13 Sep</span><span class="m"><i class="lg-ic" style="color:#000"><svg class="bi"><use href="assets/brands.svg#notion"/></svg></i><span class="t">Notion Labs<small>Second workspace · card 0917</small></span></span><span class="a">₹3,300</span></div>
+              <div class="sl"><span class="d">15 Sep</span><span class="m"><i class="lg-ic plain"></i><span class="t">Blue Tokai Coffee<small>Gurugram</small></span></span><span class="a">₹540</span></div>
+              <div class="sl" data-tool="loom"><span class="d">16 Sep</span><span class="m"><i class="lg-ic" style="color:#625DF5"><svg class="bi"><use href="assets/brands.svg#loom"/></svg></i><span class="t">Loom Inc<small>Gmail receipt · Priya</small></span></span><span class="a">₹10,500</span></div>
+              <div class="sl" data-tool="amazonwebservices"><span class="d">18 Sep</span><span class="m"><i class="lg-ic" style="color:#232F3E"><svg class="bi"><use href="assets/brands.svg#amazonwebservices"/></svg></i><span class="t">AWS EMEA<small>Luxembourg · card 4421</small></span></span><span class="a">₹41,900</span></div>
+              <div class="sl"><span class="d">19 Sep</span><span class="m"><i class="lg-ic plain"></i><span class="t">Tata Power DDL<small>Electricity</small></span></span><span class="a">₹9,120</span></div>
+              <div class="sl" data-tool="hubspot"><span class="d">21 Sep</span><span class="m"><i class="lg-ic" style="color:#FF7A59"><svg class="bi"><use href="assets/brands.svg#hubspot"/></svg></i><span class="t">HubSpot Inc<small>Cambridge MA · card 4421</small></span></span><span class="a">₹34,000</span></div>
+              <div class="sl" data-tool="canva"><span class="d">22 Sep</span><span class="m"><i class="lg-ic" style="color:#00C4CC"><svg class="bi"><use href="assets/brands.svg#canva"/></svg></i><span class="t">Canva Pty<small>Sydney · card 0917</small></span></span><span class="a">₹3,990</span></div>
+              <div class="sl"><span class="d">24 Sep</span><span class="m"><i class="lg-ic plain"></i><span class="t">MakeMyTrip<small>Flights</small></span></span><span class="a">₹12,400</span></div>
+              <div class="sl" data-tool="atlassian"><span class="d">25 Sep</span><span class="m"><i class="lg-ic" style="color:#0052CC"><svg class="bi"><use href="assets/brands.svg#atlassian"/></svg></i><span class="t">Atlassian Pty<small>Sydney · card 4421</small></span></span><span class="a">₹18,200</span></div>
+              <div class="sl" data-tool="github"><span class="d">27 Sep</span><span class="m"><i class="lg-ic" style="color:#181717"><svg class="bi"><use href="assets/brands.svg#github"/></svg></i><span class="t">GitHub Inc<small>San Francisco · card 4421</small></span></span><span class="a">₹7,560</span></div>
+              <div class="sl" data-tool="openai"><span class="d">28 Sep</span><span class="m"><i class="lg-ic" style="color:#412991"><svg class="bi"><use href="assets/brands.svg#openai"/></svg></i><span class="t">OpenAI<small>San Francisco · card 0917</small></span></span><span class="a">₹8,400</span></div>
+              <div class="sl"><span class="d">30 Sep</span><span class="m"><i class="lg-ic plain"></i><span class="t">OYO Rooms<small>Hotel</small></span></span><span class="a">₹3,200</span></div>
+              <div class="sl" data-tool="adobe"><span class="d">01 Oct</span><span class="m"><i class="lg-ic" style="color:#FF0000"><svg class="bi"><use href="assets/brands.svg#adobe"/></svg></i><span class="t">Adobe Systems<small>Dublin · card 4421</small></span></span><span class="a">₹4,700</span></div>
+              <div class="sl"><span class="d">02 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">Zepto<small>Mumbai</small></span></span><span class="a">₹760</span></div>
+              <div class="sl"><span class="d">03 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">PVR Cinemas<small>Mumbai</small></span></span><span class="a">₹1,100</span></div>
+              <div class="sl"><span class="d">04 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">Zomato<small>Gurugram</small></span></span><span class="a">₹920</span></div>
+              <div class="sl"><span class="d">05 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">Airtel<small>Postpaid · 4 lines</small></span></span><span class="a">₹3,540</span></div>
+              <div class="sl"><span class="d">06 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">Uber India<small>Bengaluru</small></span></span><span class="a">₹410</span></div>
+              <div class="sl"><span class="d">07 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">Flipkart<small>Office supplies</small></span></span><span class="a">₹6,230</span></div>
+              <div class="sl"><span class="d">08 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">Third Wave Coffee<small>Bengaluru</small></span></span><span class="a">₹680</span></div>
+              <div class="sl"><span class="d">09 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">Ola Cabs<small>Bengaluru</small></span></span><span class="a">₹560</span></div>
+              <div class="sl"><span class="d">10 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">BigBasket<small>Pantry</small></span></span><span class="a">₹2,140</span></div>
+              <div class="sl"><span class="d">11 Oct</span><span class="m"><i class="lg-ic plain"></i><span class="t">IndiGo<small>6E booking</small></span></span><span class="a">₹5,420</span></div>
           </div>
         </div>
+      </div>
 
-        <div class="pane found">
-          <div class="pane-h">Found <b id="foundN">0</b> subscriptions</div>
-          <div class="fg" id="fg">
+      <div class="pane found">
+        <div class="pane-h"><span class="ph-t"><b id="foundN">0</b> subscriptions found</span></div>
+        <div class="fprog"><i id="fprog"></i></div>
+        <div class="fg" id="fg">
             <i class="fg-tile" style="color:#4A154B"><svg class="bi"><use href="assets/brands.svg#slack"/></svg></i>
             <i class="fg-tile" style="color:#F24E1E"><svg class="bi"><use href="assets/brands.svg#figma"/></svg></i>
             <i class="fg-tile" style="color:#0B5CFF"><svg class="bi"><use href="assets/brands.svg#zoom"/></svg></i>
@@ -167,6 +174,14 @@
             <i class="fg-tile" style="color:#181717"><svg class="bi"><use href="assets/brands.svg#github"/></svg></i>
             <i class="fg-tile" style="color:#412991"><svg class="bi"><use href="assets/brands.svg#openai"/></svg></i>
             <i class="fg-tile" style="color:#FF0000"><svg class="bi"><use href="assets/brands.svg#adobe"/></svg></i>
+        </div>
+        <div class="fl-wrap">
+          <div class="fl-skel" aria-hidden="true">
+              <div class="sk"><i></i><div><b></b><b></b></div></div>
+              <div class="sk"><i></i><div><b></b><b></b></div></div>
+              <div class="sk"><i></i><div><b></b><b></b></div></div>
+              <div class="sk"><i></i><div><b></b><b></b></div></div>
+              <div class="sk"><i></i><div><b></b><b></b></div></div>
           </div>
           <div class="fl" id="fl">
             <div class="fl-row" data-idle>
@@ -195,10 +210,10 @@
               <div class="fl-right"><span class="rn">Renews in Nov</span><b class="chip talk">Negotiate</b></div>
             </div>
           </div>
-          <div class="fl-total">
-            <div><span>Paying a year</span><b>₹<span id="totalN">4,12,000</span></b></div>
-            <div class="back"><span>Back in your pocket</span><b>₹<span id="backN">0</span></b></div>
-          </div>
+        </div>
+        <div class="fl-total">
+          <div><span>Paying a year</span><b>₹<span id="totalN">4,12,000</span></b></div>
+          <div class="back"><span>Back in your pocket</span><b>₹<span id="backN">0</span></b></div>
         </div>
       </div>
     </div>
@@ -381,6 +396,6 @@
   </div>
 </footer>
 
-<script src="js/site.js?v=7"></script>
+<script src="js/site.js?v=9"></script>
 </body>
 </html>

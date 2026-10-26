@@ -57,53 +57,57 @@
   const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); io.unobserve(e.target); }), { threshold: .12, rootMargin: '0px 0px -8% 0px' });
   $$('[data-reveal]').forEach(el => io.observe(el));
 
-  /* ---------- the story: statement → found → cut ---------- */
+  /* ---------- the story: a self-running loop (read → match → cut) ---------- */
   const story = $('#product');
   if (story) {
-    const view = $('.stmt-view'), lines = $('#stmtLines'), rows = $$('.sl', lines), saas = rows.filter(r => r.dataset.tool);
-    const scan = $('.scanline'), tiles = $$('.fg-tile'), flRows = $$('.fl-row'), beats = $$('.beat'), dots = $$('.story-dots i');
-    const foundN = $('#foundN'), totalN = $('#totalN'), backN = $('#backN');
+    const device = $('#device'), lines = $('#stmtLines'), saas = $$('.sl[data-tool]', lines), readline = $('.readline');
+    const tiles = $$('.fg-tile'), flRows = $$('.fl-row'), beats = $$('.beat'), dots = $$('.story-dots i');
+    const foundN = $('#foundN'), totalN = $('#totalN'), backN = $('#backN'), st = $('#stmtState'), fprog = $('#fprog');
     const TOTAL = 412000, BACK = 131000;
-    let range = 0, scanY = 0, lastBeat = -1;
-    const measure = () => { scanY = scan.offsetTop; range = Math.max(0, lines.scrollHeight - scanY + 16); };
-    const render = p => {
-      const b = p < .36 ? 0 : p < .7 ? 1 : 2;
-      if (b !== lastBeat) { beats.forEach((el, i) => el.classList.toggle('on', i === b)); dots.forEach((d, i) => d.classList.toggle('on', i <= b)); lastBeat = b; }
-      // beat 1: the statement scrolls under the reading line
-      const p1 = clamp(p / .4);
-      const ty = -p1 * range;
-      lines.style.transform = `translate3d(0,${ty}px,0)`;
+    const T = { s0: 600, s1: 6400, r0: 6800, r1: 8900, c0: 9600, c1: 11800, hold: 15000, end: 15700 };
+    const easeIO = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+    let range = 0, readY = 0, lastBeat = -1;
+    const measure = () => { readY = readline.offsetTop; const last = saas[saas.length - 1]; range = Math.max(0, last.offsetTop + last.offsetHeight + 28 - readY); };
+    const setBeat = b => { if (b === lastBeat) return; lastBeat = b; beats.forEach((el, i) => el.classList.toggle('on', i === b)); };
+    const frame = t => {
+      const s = easeIO(clamp((t - T.s0) / (T.s1 - T.s0)));
+      const ty = -s * range; lines.style.transform = 'translate3d(0,' + ty + 'px,0)';
       let n = 0;
-      saas.forEach((r, i) => { const hit = r.offsetTop + r.offsetHeight * .5 + ty <= scanY; r.classList.toggle('hit', hit); if (hit) n++; if (tiles[i]) tiles[i].classList.toggle('in', hit); });
-      foundN.textContent = n;
-      // beat 2: the rows with seats and usage
-      const p2 = clamp((p - .36) / .3);
-      flRows.forEach((r, i) => r.classList.toggle('in', p2 > i / flRows.length));
-      // beat 3: cut idle seats, money comes back
-      const p3 = easeOut(clamp((p - .7) / .24));
-      story.classList.toggle('cut', p3 > .02);
-      totalN.textContent = fmtIN(TOTAL - BACK * p3);
-      backN.textContent = fmtIN(BACK * p3);
+      saas.forEach((r, i) => { const hit = r.offsetTop + r.offsetHeight * .5 + ty <= readY; r.classList.toggle('hit', hit); if (hit) n++; if (tiles[i]) tiles[i].classList.toggle('in', hit); });
+      foundN.textContent = n; fprog.style.width = (n / saas.length * 100) + '%';
+      const done = t >= T.s1; st.classList.toggle('done', done); st.lastChild.textContent = done ? 'Read' : 'Reading';
+      const rr = clamp((t - T.r0) / (T.r1 - T.r0));
+      flRows.forEach((r, i) => r.classList.toggle('in', rr > i / flRows.length));
+      story.classList.toggle('rows', rr > 0);
+      const c = easeOut(clamp((t - T.c0) / (T.c1 - T.c0)));
+      story.classList.toggle('cut', c > 0);
+      totalN.textContent = fmtIN(TOTAL - BACK * c); backN.textContent = fmtIN(BACK * c);
+      setBeat(t < T.r0 - 400 ? 0 : t < T.c0 - 400 ? 1 : 2);
+      const segs = [[0, T.r0], [T.r0, T.c0], [T.c0, T.hold]];
+      dots.forEach((d, i) => d.style.setProperty('--f', clamp((t - segs[i][0]) / (segs[i][1] - segs[i][0])).toFixed(3)));
+      device.classList.toggle('fade', t > T.hold);
     };
-    const pinned = () => matchMedia('(min-width:1101px)').matches;
-    let playing = false, observed = false;
-    const onS = () => { if (!pinned()) return; const r = story.getBoundingClientRect(); render(clamp(-r.top / (r.height - innerHeight))); };
-    const play = () => { // phones and tablets: play once when the device is in view
-      if (playing) return; playing = true; const t0 = performance.now(), dur = 7000;
-      const step = now => { const p = clamp((now - t0) / dur); render(p); if (p < 1) requestAnimationFrame(step); };
-      requestAnimationFrame(step);
+    const reset = t => { device.classList.add('noanim'); frame(t); void device.offsetHeight; device.classList.remove('noanim'); };
+    let t0 = null, offset = 0, running = false, raf = 0, visible = false;
+    const loop = now => {
+      if (!running) return;
+      if (t0 === null) t0 = now - offset;
+      let t = now - t0;
+      if (t >= T.end) { reset(0); t0 = now; t = 0; }
+      frame(t); raf = requestAnimationFrame(loop);
     };
-    const sync = () => {
-      measure();
-      if (STATIC) { render(1); return; }
-      if (pinned()) onS();
-      else if (!observed) { observed = true; const sio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { sio.disconnect(); play(); } }), { threshold: .35 }); sio.observe($('#device')); }
-    };
-    sync();
-    if (!STATIC) addEventListener('scroll', onS, { passive: true });
-    addEventListener('resize', sync);
-    addEventListener('load', sync);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+    const start = () => { if (running || STATIC) return; running = true; t0 = null; raf = requestAnimationFrame(loop); };
+    const stop = () => { if (!running) return; running = false; cancelAnimationFrame(raf); if (t0 !== null) offset = Math.min(performance.now() - t0, T.hold - 1); };
+    const jump = i => { const starts = [0, T.r0 - 300, T.c0 - 300]; stop(); offset = starts[i]; reset(offset); start(); };
+    dots.forEach((d, i) => { d.addEventListener('click', () => jump(i)); d.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); jump(i); } }); });
+    measure(); addEventListener('resize', measure); addEventListener('load', measure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    if (STATIC) { frame(T.hold - 1); }
+    else {
+      const vio = new IntersectionObserver(es => es.forEach(e => { visible = e.isIntersecting; if (visible && !document.hidden) start(); else stop(); }), { threshold: .25 });
+      vio.observe(device);
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else if (visible) start(); });
+    }
   }
 
   /* ---------- how it works: progress line follows scroll ---------- */
